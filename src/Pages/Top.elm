@@ -95,8 +95,8 @@ view model =
     { title = "Top"
     , body =
         [ div [ class "bg-gray-100 flex justify-center h-full" ]
-            [ div []
-                [ div [ class "max-w-6xl w-full mx-8 mt-8 mb-0 " ]
+            [ div [ class "px-8" ]
+                [ div [ class "max-w-6xl w-full mt-8 mb-0 " ]
                     [ h1 [ class "text-3xl text-gray-600 font-bold" ] [ text "Clockly" ]
                     , p [ class "text-gray-800" ] [ text "The best time tracking ever™" ]
                     ]
@@ -115,9 +115,9 @@ viewInputBox model =
     div [ class "w-full" ]
         [ label [ class "block text-sm font-medium leading-5 text-gray-700" ]
             [ text "New Entry" ]
-        , Html.form [ onSubmit SubmittedNewEntryForm, class "mt-1 relative rounded shadow-sm grid grid-cols-12 gap-2" ]
+        , Html.form [ onSubmit SubmittedNewEntryForm, class "mt-1 relative rounded shadow-sm grid grid-cols-12 gap-1" ]
             [ input
-                [ class "form-input block sm:text-sm sm:leading-5 rounded col-span-9"
+                [ class "form-input block sm:text-sm sm:leading-5 rounded col-span-6 md:col-span-9"
                 , id "email"
                 , placeholder "Description"
                 , onInput (TypedInInput "description")
@@ -125,14 +125,14 @@ viewInputBox model =
                 ]
                 []
             , input
-                [ class "form-input block sm:text-sm sm:leading-5 col-span-2 rounded"
+                [ class "form-input block sm:text-sm sm:leading-5 col-span-4 md:col-span-2 rounded"
                 , id "email"
                 , placeholder "0.0"
                 , onInput (TypedInInput "hours")
                 , value (Dict.get "hours" model.inputs |> Maybe.withDefault "")
                 ]
                 []
-            , input [ class "block text-xs text-green-500 justify-center flex items-center px-3 border rounded bg-green-100 uppercase font-bold border-green-300 border-l col-span-1 hover:text-green-800 hover:bg-green-300 transition ease-in duration-200", type_ "submit", value "Save" ]
+            , input [ class "block text-xs text-green-500 justify-center flex items-center px-3 border rounded bg-green-100 uppercase font-bold border-green-300 border-l col-span-2 md:col-span-1 hover:text-green-800 hover:bg-green-300 transition ease-in duration-200", type_ "submit", value "Save" ]
                 []
             ]
         ]
@@ -149,10 +149,8 @@ viewEntries model =
                             [ tr []
                                 [ th [ class "px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider" ]
                                     [ text "Description" ]
-                                , th [ class "px-6 py-3 border-b border-gray-200 bg-gray-50" ]
+                                , th [ class "px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider" ]
                                     [ text "Hours" ]
-                                , th [ class "px-6 py-3 border-b border-gray-200 bg-gray-50" ]
-                                    []
                                 ]
                             ]
                         , tbody [ class "bg-white" ] <| List.map viewEntry model.entries
@@ -170,17 +168,10 @@ viewEntries model =
 viewEntry entry =
     tr []
         [ td [ class "px-6 py-4 whitespace-no-wrap border-b border-gray-200" ]
-            [ div [ class "flex items-center" ]
-                [ div [ class "flex-shrink-0 h-10 w-10 font-bold text-lg rounded-full text-gray-800 items-center flex justify-center" ]
-                    [ text entry.hours
-                    ]
-                , div [ class "ml-4" ]
-                    [ div [ class "text-sm leading-5 font-medium text-gray-900" ]
-                        [ text entry.description ]
-                    ]
-                ]
+            [ div [ class "text-sm leading-5 font-medium text-gray-900" ]
+                [ text entry.description ]
             ]
-        , td [ class "px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 font-medium" ]
+        , td [ class "px-6 py-4 whitespace-no-wrap text-left border-b border-gray-200 text-sm leading-5 font-medium" ]
             [ text entry.hours ]
         ]
 
